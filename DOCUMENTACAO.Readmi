@@ -1,0 +1,70 @@
+
+*** Criação de uma nova Web API para uma empresa que oferece cursos de idiomas. *** 
+
+A Web Api é gerada através do comando no console:
+
+1 - dotnet new webapi
+
+Linguagem de Programação utilizada: C# com .net6
+IDE Utilizada: Visual Studio Code
+
+O projeto foi criado com persistência no Banco de Dados SqlServer, sendo a configuração manual individual
+de cada Entidade mapeados para o arquivo CourseDbContext. A configuração foi realizada através do 
+Entity Framework. Abaixo seguem os comandos realizados para baixar os pacotes necessários:
+ 
+    1 - dotnet tool install --global dotnet-ef (Executa apenas uma vez na máquina).
+    2 - dotnet add package Microsoft.EntityFrameworkCore.Design (Executa a cada novo projeto).
+    3 - dotnet add package Microsoft.EntityFrameworkCore.SqlServer (Executa a cada novo projeto).
+
+ No arquivo Json é necessário configurar a String de conexão com o Banco, bem como realizar as configurações no 
+ Startup  do Projeto.
+
+ ======================================  Organização dos arquivos ==========================================
+
+ 1 - Pasta Context - Onde fica o arquivo de Contexto de banco de dados, ou seja as configurações.
+ 2 - Pasta Controllers - Onde ficam todos os Métodos que contém os verbos Http para realização do CRUD.
+ 3 - Pasta Dtos - Onde contém apenas as Propriedades necessárias de cada Classe para utilizar no Swagger.
+ 4 - Pasta Mappings - Onde constam os mapeamentos das Entidades do Banco de Dados.
+ 5 - Pasta Models - Onde constam todos os modelos das classes.
+ 6 - Pasta Repositories - Onde constam os arquivos com os Métodos que fazem as chamadas direto para o Banco de Dados.
+ 7 - Pasta Services - São organizados os arquivos onde são aplicadas as regras de negócios.
+
+ Arquivo Program - Startup da Aplicação e onde estão as Injeções de Dependência.
+
+================================================================================================================
+
+Após criar as Models, configurar as entidades e realizar o mapemento, é necessário criar as Migrations aravés
+do comando:
+
+    1 - dotnet-ef migrations add [nomeMigration] (são gerados as configurações necessárias do Banco de Dados)
+
+ Em seguida, para que ocorra a criação das tabelas no Banco de Dados, através do comando:
+
+    2 - dotnet-ef database update
+
+==========================================  Regras de Negócios  ==============================================
+
+Para criação das tabelas, foi utilizado relacionamento muitos para muitos, sendo Matricula a tabela de Junção entre 
+Aluno e Turma. Ou seja, para cadastrar uma Matricula, é necessário informar a Turma e o Aluno.
+Nas Classes Aluno e Turma existem uma coleção do Tipo Matricula.
+Para cada tabela foi criado CRUD de acordo com as regras de negócio especificadas no Email:
+
+    * Aluno não pode ser cadastrado repetido (validação pelo CPF) 
+    * No momento de cadastrar um aluno, deve-se informar pelo menos uma turma que ele irá cursar; 
+    * O mesmo aluno pode ser matriculado em várias turmas diferentes, porém a Matrícula não pode ser repetida na mesma turma; 
+    * Uma turma não pode ter mais de 5 alunos; (para esta regra, a validação é realizada pelo resultado do valor setado
+      na Propriedade QtdMaximaAlunos)
+    * Turma não pode ser excluída se possuir alunos; 
+
+Foi realizado tratativas de erro e os testes foram realizados através do Swagger, onde são retornados Status
+Response de cada ação na aplicação, podendo analisar os erros e realizar as correções.
+
+
+
+
+
+
+
+
+
+

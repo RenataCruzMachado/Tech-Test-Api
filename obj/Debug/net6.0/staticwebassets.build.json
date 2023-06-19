@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "pZDxhZmXEy6BHZo9P7/IBQ18vYE3GVti+mhZ1xnvv50=",
+  "Source": "tech-test-api",
+  "BasePath": "_content/tech-test-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
